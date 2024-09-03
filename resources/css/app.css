@@ -92,6 +92,7 @@ input[type="checkbox"]:hover {
 
 a {
     color: #ffa500; /* Lighter orange for label on hover */
+    word-break: break-all;
 }
 
 a:hover {
