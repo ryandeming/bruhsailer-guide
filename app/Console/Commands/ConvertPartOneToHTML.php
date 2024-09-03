@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-class ConvertMarkdownToHTML extends Command
+class ConvertPartOneToHTML extends Command
 {
-    protected $signature = 'convert:markdown-to-html';
+    protected $signature = 'convert:part-one';
     protected $description = 'Convert markdown to structured HTML';
 
     public function handle()
@@ -82,7 +82,7 @@ class ConvertMarkdownToHTML extends Command
         }
 
         // Save the output to an HTML file
-        file_put_contents(storage_path('app/public/html/output.html'), $html);
+        file_put_contents(storage_path('app/public/html/part1.html'), $html);
 
         $this->info('Conversion completed successfully!');
     }
