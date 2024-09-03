@@ -51,4 +51,52 @@
     </section>
 </div>
 
+<script>
+    // Function to get a cookie value by name
+    function getCookie(name) {
+        let cookieArr = document.cookie.split(";");
+
+        for(let i = 0; i < cookieArr.length; i++) {
+            let cookiePair = cookieArr[i].split("=");
+            
+            if(name == cookiePair[0].trim()) {
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+        return null;
+    }
+
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            let date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    // Function to handle checkbox change and store in cookie
+    function handleCheckboxChange(event) {
+        let checkbox = event.target;
+        let checkboxId = checkbox.id;
+        setCookie(checkboxId, checkbox.checked, 365);  // Store for 1 year
+    }
+
+    // Function to initialize the checkboxes based on cookies
+    function initializeCheckboxes() {
+        let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(checkbox) {
+            let cookieValue = getCookie(checkbox.id);
+            if (cookieValue !== null) {
+                checkbox.checked = (cookieValue === 'true');
+            }
+            checkbox.addEventListener('change', handleCheckboxChange);
+        });
+    }
+
+    // Initialize checkboxes when the page loads
+    window.addEventListener('load', initializeCheckboxes);
+</script>
 @endsection
