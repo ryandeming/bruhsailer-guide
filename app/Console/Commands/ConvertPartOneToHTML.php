@@ -10,6 +10,7 @@ class ConvertPartOneToHTML extends Command
 {
     protected $signature = 'convert:part-one';
     protected $description = 'Convert markdown to structured HTML';
+    private $stepCount = 1;
 
     public function handle()
     {
@@ -151,7 +152,7 @@ class ConvertPartOneToHTML extends Command
             }
     
             foreach ($sentences as $sentence) {
-                $stepId = uniqid('step_');
+                $stepId = $this->generateStepId();
     
                 // Convert markdown to HTML
                 $sentence = $this->convertMarkdownToHtml($sentence);
@@ -199,5 +200,11 @@ class ConvertPartOneToHTML extends Command
         $text = preg_replace('/\[(.*?)\]\((.*?)\)/', '<a href="$2">$1</a>', $text);
 
         return $text;
+    }
+
+    function generateStepId() {
+        $stepId = 'step_' . $this->stepCount;
+        $this->stepCount++;
+        return $stepId;
     }
 }
