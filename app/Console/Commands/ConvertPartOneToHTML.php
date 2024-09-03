@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class ConvertPartOneToHTML extends Command
 {
@@ -79,6 +80,10 @@ class ConvertPartOneToHTML extends Command
                 preg_match_all('/(\d+\..*?)(GP stack:.*?Items needed:.*?Total time:.*?)(?=\n\d+\.|\z)/s', $match[0], $matches, PREG_SET_ORDER);
                 $html .= $this->processSection($matches[0]);
             }
+        }
+
+        if (!Storage::exists('public/html')) {
+            Storage::makeDirectory('public/html');
         }
 
         // Save the output to an HTML file
